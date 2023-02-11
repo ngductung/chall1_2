@@ -14,7 +14,7 @@
 
     <div class="panel panel-white">
         <div class="panel-heading clearfix">
-            <h4 class="panel-title">Thêm sinh viên</h4>
+            <h4 class="panel-title">Chỉnh sửa thông tin cá nhân</h4>
         </div>
         <div class="panel-body">
             {{-- <div class="form-group">
@@ -25,8 +25,9 @@
             <form action="{{ route('updateMyI4', $account) }}" method="post">
                 @csrf
                 @method('put')
+                <input type="hidden" name="id" value="{{ $account->id }}">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Mã sinh viên</label>
+                    <label for="exampleInputEmail1">Username</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Mã sinh viên"
                         name="username" value="{{ $account->username }}">
                 </div>

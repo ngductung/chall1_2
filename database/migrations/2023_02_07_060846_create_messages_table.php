@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('content', 255);
             $table->timestamps();
 
-            $table->foreign('send_user')->references('username')->on('accounts');
-            $table->foreign('receive_user')->references('username')->on('accounts');
+            // $table->foreign('send_user')->references('username')->on('accounts');
+            // $table->foreign('receive_user')->references('username')->on('accounts');
         });
     }
 

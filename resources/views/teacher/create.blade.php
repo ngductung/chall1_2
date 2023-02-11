@@ -20,7 +20,7 @@
                 @csrf
 
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Mã sinh viên</label>
+                    <label for="exampleInputEmail1">Username</label>
                     <input required type="text" class="form-control" id="exampleInputEmail1" placeholder="Mã sinh viên"
                         name="username" required value="{{ old('maSV') }}">
                 </div>

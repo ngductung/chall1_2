@@ -69,7 +69,7 @@ class AccountController extends Controller
 
     public function editMyI4()
     {
-        $data =  Account::query()->where('username', session()->get('username'))->first();
+        $data =  Account::query()->where('id', session()->get('id'))->first();
         return view('updateMyI4', [
             'account' => $data,
         ]);
@@ -78,30 +78,35 @@ class AccountController extends Controller
     public function updateMyI4(UpdateAccountRequest $request, Account $account)
     {
         if (session()->get('role') === 1) {
-            Account::query()->where('username', $request->get('username'))
-                ->update($request->except([
-                    '_token',
-                    '_method',
-                ]));
+            // Account::query()->where('username', $request->get('username'))
+            //     ->update($request->except([
+            //         '_token',
+            //         '_method',
+            //     ]));
+            $account =  Account::query()->where('id', '=', $request->get('id'))->first();
+            $account->username = $request->get('username');
+            $account->name = $request->get('name');
+            $account->email = $request->get('email');
+            $account->phone = $request->get('phone');
+            $account->update();
         } else {
-            Account::query()->where('username', '=', session()->get('username'))
-                ->update($request->except([
-                    '_token',
-                    '_method',
-                    'username',
-                    'name',
-                ]));
+            $account =  Account::query()->where('id', '=', $request->get('id'))->first();
+            $account->email = $request->get('email');
+            $account->phone = $request->get('phone');
+            $account->update();
         }
         return redirect()->back();
     }
 
     public function update(UpdateAccountRequest $request, Account $account)
     {
-        Account::query()->where('username', $request->get('username'))
-            ->update($request->except([
+        $account = Account::query()->where('id', '=', $request->get('id'))->first();
+        $account->update(
+            $request->except([
                 '_token',
                 '_method',
-            ]));
+            ])
+        );
         return redirect()->route('index');
     }
 

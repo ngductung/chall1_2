@@ -23,7 +23,7 @@ return new class extends Migration
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
 
-            $table->foreign('created_by')->references('username')->on('accounts');
+            // $table->foreign('created_by')->references('username')->on('accounts');
         });
     }
 

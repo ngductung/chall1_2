@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('link', 1000);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
-            $table->foreign('username_turnIn')->references('username')->on('accounts');
             $table->foreign('id_Ass')->references('id')->on('assignments');
+            // $table->foreign('username_turnIn')->references('username')->on('accounts');
         });
     }
 

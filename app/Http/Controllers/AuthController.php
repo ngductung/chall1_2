@@ -19,6 +19,7 @@ class AuthController extends Controller
                 ->where('username', $request->get('username'))
                 ->where('password', $request->get('password'))
                 ->firstOrFail();
+            session()->put('id', $account->id);
             session()->put('username', $account->username);
             session()->put('role', $account->role);
             session()->put('name', $account->name);
