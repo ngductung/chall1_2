@@ -45,12 +45,12 @@ class AccountController extends Controller
         return redirect()->route('index');
     }
 
-    public function show($username)
+    public function show($username_id)
     {
-        $dataAccount =  Account::query()->where('username', $username)->first();
+        $dataAccount =  Account::query()->where('id', '=', $username_id)->first();
         $dataMessage = Message::query()
-            ->where('send_user', '=', session()->get('username'))
-            ->where('receive_user', '=', $username)
+            ->where('send_user_id', '=', session()->get('id'))
+            ->where('receive_user_id', '=', $username_id)
             ->get();
 
         return view('detail', [
@@ -59,9 +59,9 @@ class AccountController extends Controller
         ]);
     }
 
-    public function edit($username)
+    public function edit($username_id)
     {
-        $data =  Account::query()->where('username', $username)->first();
+        $data =  Account::query()->where('id', '=', $username_id)->first();
         return view('teacher.update', [
             'account' => $data,
         ]);
@@ -105,21 +105,22 @@ class AccountController extends Controller
             $request->except([
                 '_token',
                 '_method',
+                'role',
             ])
         );
         return redirect()->route('index');
     }
 
-    public function destroy($username)
+    public function destroy($username_id)
     {
-        $account = Account::query()->where('username', '=', $username)->first();
+        $account = Account::query()->where('id', '=', $username_id)->first();
 
         // delete message when delete user
-        $datas = Message::query()->where('receive_user', '=', $username)->get();
+        $datas = Message::query()->where('receive_user_id', '=', $username_id)->get();
         foreach ($datas as $data) {
             $data->delete();
         }
-        $datas = Message::query()->where('send_user', '=', $username)->get();
+        $datas = Message::query()->where('send_user_id', '=', $username_id)->get();
         foreach ($datas as $data) {
             $data->delete();
         }
@@ -131,7 +132,7 @@ class AccountController extends Controller
         //delete assignment submit when delete teacher
         if ($account->role === 1) {
             //get assignment
-            $assignments = Assignment::query()->where('created_by', '=', $username)->get();
+            $assignments = Assignment::query()->where('created_by', '=', $account->id)->get();
 
             //delete assignment turn in by student by assignment->id
             foreach ($assignments as $assignment) {
@@ -146,7 +147,7 @@ class AccountController extends Controller
 
         //delete assignment turnin when delete user
         if ($account->role === 0) {
-            $turnIns = TurnInAss::query()->where('username_turnIn', '=', $username)->first();
+            $turnIns = TurnInAss::query()->where('userID_turnIn', '=', $account->id)->first();
             // dd($turnIns);
             if ($turnIns) {
                 unlink($turnIns->link);
@@ -155,7 +156,7 @@ class AccountController extends Controller
         }
 
         //delete user
-        Account::query()->where('username', '=', $account->username)->delete();
+        Account::query()->where('id', '=', $username_id)->delete();
 
 
         return redirect()->route('index');

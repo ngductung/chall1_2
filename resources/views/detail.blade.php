@@ -35,7 +35,7 @@
             <h4 class="panel-title">Message</h4>
         </div>
         <div class="panel-body">
-            <form class="form-group" action="{{ route('saveMessage', $account->username) }}" method="post">
+            <form class="form-group" action="{{ route('saveMessage', $account->id) }}" method="post">
                 @csrf
                 <label for="exampleInputEmail1">Message</label>
                 <input required type="text" class="form-control" id="exampleInputEmail1" name="message">
@@ -56,8 +56,8 @@
                         role="grid" aria-describedby="example3_info">
                         <thead>
                             <tr role="row">
-                                <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1"
-                                    style="width: 119px;" aria-sort="ascending">
+                                <th class="sorting_asc" tabindex="0" rowspan="1" colspan="1" style="width: 119px;"
+                                    aria-sort="ascending">
                                     Content
                                 </th>
                                 <th tabindex="0" rowspan="1" colspan="1" style="width: 124.906px;">
@@ -70,12 +70,11 @@
                                 <tr>
                                     <td>{{ $message->content }}</td>
                                     <td>
-                                        <a class="btn btn-info btn-rounded"
-                                            href="{{ route('editMess', $message->id) }}">
+                                        <a class="btn btn-info btn-rounded" href="{{ route('editMess', $message->id) }}">
                                             Sửa
                                         </a>
-                                        <form action="{{ route('deleteMess', $message->id) }}"
-                                            method="post" style="margin: 0;display: inline-block;">
+                                        <form action="{{ route('deleteMess', $message->id) }}" method="post"
+                                            style="margin: 0;display: inline-block;">
                                             @csrf
                                             @method('delete')
                                             <button class="btn btn-danger btn-rounded">Xóa</button>
@@ -87,8 +86,5 @@
                     </table>
                 </div>
             </div>
-    </div>
-
-
-    
-@endsection
+        </div>
+    @endsection

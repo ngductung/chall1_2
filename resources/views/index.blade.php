@@ -55,15 +55,15 @@
                                                 <td>{{ $account->getRole() }}</td>
                                                 <td>
                                                     <a class="btn btn-info btn-rounded"
-                                                        href="{{ route('detail', $account->username) }}">
+                                                        href="{{ route('detail', $account->id) }}">
                                                         Chi tiết
                                                     </a>
                                                     @if (session()->get('role') === 1)
                                                         <a class="btn btn-warning btn-rounded"
-                                                            href="{{ route('teacher.edit', $account->username) }}">
+                                                            href="{{ route('teacher.edit', $account->id) }}">
                                                             Sửa
                                                         </a>
-                                                        <form action="{{ route('teacher.destroy', $account->username) }}"
+                                                        <form action="{{ route('teacher.destroy', $account->id) }}"
                                                             method="post" style="margin: 0;display: inline-block;">
                                                             @csrf
                                                             @method('delete')

@@ -6,6 +6,7 @@ use App\Models\Challenge;
 use App\Http\Requests\StoreChallengeRequest;
 use App\Http\Requests\UpdateChallengeRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class ChallengeController extends Controller
@@ -19,11 +20,6 @@ class ChallengeController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         return view('teacher.createChall', [
@@ -35,7 +31,7 @@ class ChallengeController extends Controller
     {
 
         $file = $request->file('file');
-        $name = $file->getClientOriginalName();
+        $name = strtolower($file->getClientOriginalName());
 
         $extension = $file->extension();
         $extension = strtolower($extension);
@@ -45,13 +41,17 @@ class ChallengeController extends Controller
             ]);
         }
 
-        Storage::putFileAs('challenges', $file, $name);
         $challenge = new Challenge();
         $challenge->challName = $request->get('name');
-        $challenge->link = $challenge->getPath($name);
         $challenge->hint = $request->get('hint');
         $challenge->save();
 
+        $challID = $challenge->id;
+        $name = $challID . '_' . $name;
+        $challenge->link = $challenge->getPath($name);
+        $challenge->update();
+
+        Storage::putFileAs('challenges', $file, $name);
         return redirect()->route('challenge');
     }
 
@@ -84,23 +84,21 @@ class ChallengeController extends Controller
 
     public function processFlag(Request $request, $idChall)
     {
-        $chall = Challenge::query()->where('id', '=', $idChall)->first();
         $answer = strtolower($request->get('answer'));
 
-        $flag = strtolower((new Challenge())->getNameFile($chall->id));
+        $fileName = $idChall . '_' . $answer . '.txt';
+        $path = storage_path('app/challenges/' . $fileName);
 
-        if (strcmp($flag, $answer) === 0) {
-            $file = fopen($chall->link, 'r');
-            $content = fread($file, filesize($chall->link));
-            return view('showStatus', [
-                'status' => 1,
-                'linkFile' => $chall->link,
-                'content' => $content,
-            ]);
-        } else {
+        if (!File::exists($path)) {
             return view('showStatus', [
                 'status' => 0,
                 'id' => $idChall,
+            ]);
+        } else {
+            $content = file_get_contents($path);
+            return view('showStatus', [
+                'status' => 1,
+                'content' => $content,
             ]);
         }
     }

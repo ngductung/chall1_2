@@ -22,6 +22,7 @@ Route::group([
 
     //logout
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+    
     //home
     Route::get('', [AccountController::class, 'index'])->name('index');
     Route::get('/message', [MessageController::class, 'index'])->name('message');

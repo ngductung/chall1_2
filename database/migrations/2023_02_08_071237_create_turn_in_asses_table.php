@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('turn_in_asses', function (Blueprint $table) {
             $table->id();
-            $table->string('username_turnIn', 50);
+            $table->bigInteger('userID_turnIn')->unsigned();
             $table->bigInteger('id_Ass')->unsigned();
             $table->string('link', 1000);
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));

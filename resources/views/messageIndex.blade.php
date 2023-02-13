@@ -32,7 +32,7 @@
                                     <tbody>
                                         @foreach ($messages as $message)
                                             <tr>
-                                                <td>{{ $message->getNameUserSender($message->send_user) }}</td>
+                                                <td>{{ $message->getNameUserSender($message->send_user_id) }}</td>
                                                 <td>{{ $message->content }}</td>
                                                 <td>
                                                     <form action="{{ route('deleteMess', $message->id) }}"

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('send_user');
-            $table->string('receive_user');
+            $table->string('send_user_id');
+            $table->string('receive_user_id');
             $table->string('content', 255);
             $table->timestamps();
 

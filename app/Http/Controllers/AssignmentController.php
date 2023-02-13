@@ -41,7 +41,7 @@ class AssignmentController extends Controller
         $assignment->description = $request->get('description');
         $assignment->link = $assignment->getPath($name);
         $assignment->due = $request->get('due');
-        $assignment->created_by = session()->get('username');
+        $assignment->created_by = session()->get('id');
         $assignment->save();
 
         return redirect()->route('assignment');

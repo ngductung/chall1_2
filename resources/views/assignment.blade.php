@@ -42,7 +42,7 @@
                                             <tr>
                                                 <td>{{ $assignment->due }}</td>
                                                 <td>{{ $assignment->description }}</td>
-                                                <td>{{ $assignment->created_by }}</td>
+                                                <td>{{ $assignment->getNameUserCreateAss($assignment->created_by) }}</td>
                                                 <td>
                                                     <a href="{{ route('detailAss', $assignment->id) }}"
                                                         class="btn btn-info">

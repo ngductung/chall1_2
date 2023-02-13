@@ -17,6 +17,12 @@ class TurnInAss extends Model
         'link',
     ];
 
+    public function getNameUserbyID($userID_turnIn)
+    {
+        $account = Account::query()->where('id', '=', $userID_turnIn)->first();
+        return $account->name;
+    }
+
     public function getPath($name)
     {
         $path = storage_path('app/turnInAss/' . $name);

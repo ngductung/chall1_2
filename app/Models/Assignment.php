@@ -18,6 +18,12 @@ class Assignment extends Model
         'due',
     ];
 
+    public function getNameUserCreateAss($account_id)
+    {
+        $account = Account::query()->where('id', '=', $account_id)->first();
+        return $account->name;
+    }
+
     public function getAssignment($id)
     {
         $assignment = Assignment::query()->where('id', '=', $id)->first();

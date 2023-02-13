@@ -57,7 +57,7 @@
                                                 {{ $student->getNameFile($student->link) }}
                                             </a>
                                         </td>
-                                        <td>{{ $student->username_turnIn }}</td>
+                                        <td>{{ $student->getNameUserbyID($student->userID_turnIn) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

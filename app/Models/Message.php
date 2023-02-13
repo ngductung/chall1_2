@@ -17,11 +17,11 @@ class Message extends Model
         'content',
     ];
 
-    public function getNameUserSender($send_user)
+    public function getNameUserSender($send_user_id)
     {
-        $account = new Account();
-        $name = $account->query()->where('username', '=', $send_user)->first();
+        // $account = new Account();
+        $account = (new Account())::query()->where('id', '=', $send_user_id)->first();
         // dd($name->name);
-        return $name->name;
+        return $account->name;
     }
 }

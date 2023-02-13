@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('challName', 50);
             $table->string('hint', 1000);
-            $table->string('link', 1000);
+            $table->string('link', 1000)->nullable();
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
         });

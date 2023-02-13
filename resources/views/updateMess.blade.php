@@ -12,7 +12,7 @@
                 <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Mã sinh viên"
                     name="username" required value="{{ $account->username }}" disabled>
             </div> --}}
-            <form action="{{ route('updateMess', $message) }}" method="post">
+            <form action="{{ route('updateMess', $message->id) }}" method="post">
                 @csrf
                 @method('put')
                 <div class="form-group">

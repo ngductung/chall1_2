@@ -11,7 +11,7 @@ class MessageController extends Controller
     public function index()
     {
         $messages = (new Message())->query()
-        ->where('receive_user','=',session()->get('username'))
+        ->where('receive_user_id','=',session()->get('id'))
         ->get();
         return view('messageIndex', [
             'messages' => $messages
@@ -23,11 +23,11 @@ class MessageController extends Controller
         //
     }
 
-    public function store(StoreMessageRequest $request, $receive_user)
+    public function store(StoreMessageRequest $request, $receive_user_id)
     {
         $message = new Message();
-        $message->receive_user = $receive_user;
-        $message->send_user = session()->get('username');
+        $message->receive_user_id = $receive_user_id;
+        $message->send_user_id = session()->get('id');
         $message->content = $request->get('message');
         $message->save();
 
@@ -57,7 +57,7 @@ class MessageController extends Controller
             ]));
         $username = Message::query()->where('id', '=', $messageID)->first();
         // dd($username->receive_user);
-        return redirect()->route('detail', $username->receive_user);
+        return redirect()->route('detail', $username->receive_user_id);
     }
 
     public function destroy($messageID)

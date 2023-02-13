@@ -33,14 +33,14 @@ class TurnInAssController extends Controller
         $turnInAss = new TurnInAss();
         $path = $turnInAss->getPath($name);
         if (!File::exists($path)) {
-            $turnInAss->username_turnIn = session()->get('username');
+            $turnInAss->userID_turnIn = session()->get('id');
             $turnInAss->id_Ass = $request->get('id_Ass');
             $turnInAss->link = $path;
             Storage::putFileAs('turnInAss', $file, $name);
             $turnInAss->save();
         } else {
             $old = TurnInAss::query()->where('link', '=', $path)->first();
-            $old->username_turnIn = session()->get('username');
+            $old->userID_turnIn = session()->get('id');
             $old->id_Ass = $request->get('id_Ass');
             $old->link = $path;
             Storage::putFileAs('turnInAss', $file, $name);

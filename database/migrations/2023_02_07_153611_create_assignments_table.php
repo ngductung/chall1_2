@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('description');
             $table->string('link');
-            $table->string('created_by');
+            $table->bigInteger('created_by');
             $table->dateTime('due');
             $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP'));
